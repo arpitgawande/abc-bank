@@ -7,6 +7,10 @@ import static java.lang.Math.abs;
 
 public class Customer {
     private String name;
+    /*
+     * Accounts of a customer.
+     * It is assumed for the sake of assignment that; the customer can have only one account for each account type.
+     */
     private List<Account> accounts;
 
     public Customer(String name) {
@@ -64,12 +68,37 @@ public class Customer {
 
         //Now total up all the transactions
         double total = 0.0;
-        for (Transaction t : a.transactions) {
-            s += "  " + (t.amount < 0 ? "withdrawal" : "deposit") + " " + toDollars(t.amount) + "\n";
-            total += t.amount;
+        for (Transaction t : a.getTransactions()) {
+            s += "  " + (t.getAmount() < 0 ? "withdrawal" : "deposit") + " " + toDollars(t.getAmount()) + "\n";
+            total += t.getAmount();
         }
         s += "Total " + toDollars(total);
         return s;
+    }
+    
+    /**
+     * Get account by using account type.
+     * @param accountType
+     * @return
+     */
+    public Account getAccount(int accountType) {
+    	for(Account account: accounts) {
+    		if(account.getAccountType() == accountType) {
+    			return account;
+    		}	
+    	}
+    	return null;    	
+    }
+    
+    /**
+     * 
+     * @param fromAccount: account from which money has to be taken 
+     * @param toAccount: account to which money has to be deposited
+     * @param amount: transaction amount
+     */
+    public void transfer(Account fromAccount, Account toAccount, double amount) {
+    	fromAccount.withdraw(amount);
+    	toAccount.deposit(amount);
     }
 
     private String toDollars(double d){

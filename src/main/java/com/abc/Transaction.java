@@ -1,11 +1,13 @@
 package com.abc;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class Transaction {
-    public final double amount;
-
+	
+	/*
+	 * Encapsulating transaction fields with private access modifier
+	 */
+    private final double amount;
     private Date transactionDate;
 
     public Transaction(double amount) {
@@ -13,4 +15,15 @@ public class Transaction {
         this.transactionDate = DateProvider.getInstance().now();
     }
 
+	public Date getTransactionDate() {
+		return transactionDate;
+	}
+
+	public void setTransactionDate(Date transactionDate) {
+		this.transactionDate = transactionDate;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
 }

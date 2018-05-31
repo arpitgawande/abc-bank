@@ -46,6 +46,27 @@ public class CustomerTest {
         oscar.openAccount(new Account(Account.CHECKING));
         assertEquals(2, oscar.getNumberOfAccounts());
     }
+    
+    /**
+     * Testing account transfer feature.
+     */
+    @Test
+    public void testTransfer() {
+        Account checkingAccount = new Account(Account.CHECKING);
+        Account savingsAccount = new Account(Account.SAVINGS);
+        checkingAccount.deposit(1000.0);
+        savingsAccount.deposit(1000.0);
+        Customer oscar = new Customer("Oscar")
+                .openAccount(checkingAccount);
+        oscar.openAccount(savingsAccount);
+        /* Transfer fund */
+        oscar.transfer(checkingAccount, savingsAccount, 100);
+        /* Verify */
+        checkingAccount = oscar.getAccount(Account.CHECKING);
+        savingsAccount = oscar.getAccount(Account.SAVINGS);
+        assertEquals(900.00, checkingAccount.sumTransactions(), 0.00);
+        assertEquals(1100.00, savingsAccount.sumTransactions(), 0.00);
+    }
 
     @Ignore
     public void testThreeAcounts() {
