@@ -11,6 +11,7 @@ public class Account {
 	public static final int CHECKING = 0;
 	public static final int SAVINGS = 1;
 	public static final int MAXI_SAVINGS = 2;
+	public static final int DAYS_IN_YEAR = 365;
 
 	/*
 	 * Account class could have account id to uniquely identify an account,
@@ -43,15 +44,19 @@ public class Account {
 			transactions.add(new Transaction(-amount));
 		}
 	}
-
+	/**
+	 * Calculate interest on the amount.
+	 * Modifying function to calculate daily interest instead of annual.
+	 * @return interest per day
+	 */
 	public double interestEarned() {
 		double amount = sumTransactions();
 		switch (accountType) {
 		case SAVINGS:
 			if (amount <= 1000)
-				return amount * 0.001;
+				return amount * (0.001/DAYS_IN_YEAR);
 			else
-				return 1 + (amount - 1000) * 0.002;
+				return 1 + (amount - 1000) * (0.002/DAYS_IN_YEAR);
 			// case SUPER_SAVINGS:
 			// if (amount <= 4000)
 			// return 20;
@@ -60,12 +65,12 @@ public class Account {
 		 */
 		case MAXI_SAVINGS:
 			if(isWithdrawalLast10Days()) {
-				return amount * 0.001;
+				return amount * (0.001/DAYS_IN_YEAR);
 			} else {
-				return amount * 0.05;
+				return amount * (0.05/DAYS_IN_YEAR);
 			}
 		default:
-			return amount * 0.001;
+			return amount * (0.001/DAYS_IN_YEAR);
 		}
 	}
 
@@ -92,6 +97,7 @@ public class Account {
 			Transaction transaction = transactions.get(i);
 			long daysBefore = getDaysBefore(transaction);
 			if(daysBefore < 10) {
+				/* Transaction is a withdrawal if amount is negative */
 				if(transaction.getAmount() < 0) {
 					return true;
 				}

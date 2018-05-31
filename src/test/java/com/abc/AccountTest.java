@@ -10,6 +10,7 @@ import org.junit.Test;
  *
  */
 public class AccountTest {
+	/* Precision for double value check */
 	private static final double DOUBLE_DELTA = 1e-15;
 	@Test
 	public void testInterestEarned() {

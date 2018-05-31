@@ -5,7 +5,8 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class BankTest {
-    private static final double DOUBLE_DELTA = 1e-15;
+	/* Changing delta to precision till 9 decimal point, sufficiently large for practical amount calculations */
+    private static final double DOUBLE_DELTA = 1e-9;
 
     @Test
     public void customerSummary() {
@@ -16,7 +17,8 @@ public class BankTest {
 
         assertEquals("Customer Summary\n - John (1 account)", bank.customerSummary());
     }
-
+    
+    /* Modifying following test cases to calculate daily interest */
     @Test
     public void checkingAccount() {
         Bank bank = new Bank();
@@ -26,7 +28,7 @@ public class BankTest {
 
         checkingAccount.deposit(100.0);
 
-        assertEquals(0.1, bank.totalInterestPaid(), DOUBLE_DELTA);
+        assertEquals(0.000273973, bank.totalInterestPaid(), DOUBLE_DELTA);
     }
 
     @Test
@@ -37,7 +39,7 @@ public class BankTest {
 
         savingAccount.deposit(1500.0);
 
-        assertEquals(2.0, bank.totalInterestPaid(), DOUBLE_DELTA);
+        assertEquals(1.002739726, bank.totalInterestPaid(), DOUBLE_DELTA);
     }
 
     @Test
@@ -48,7 +50,7 @@ public class BankTest {
 
         maxiSavingAccount.deposit(3000.0);
 
-        assertEquals(170.0, bank.totalInterestPaid(), DOUBLE_DELTA);
+        assertEquals(0.410958904, bank.totalInterestPaid(), DOUBLE_DELTA);
     }
 
 }
